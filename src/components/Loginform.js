@@ -15,12 +15,16 @@ class Loginform extends React.Component {
             .catch(() => {
             firebase.auth().createUserWithEmailAndPassword(email,password)
                 .then(this.onLoginSuccess.bind(this))
-                .catch(() => {
-                this.setState({ error: 'Authentication Failed'});
-            });
+                .catch(this.onLoginFail.bind(this));
         });
     }
 
+    onLoginFail(){
+        this.setState({
+            error: 'Authentication Failed',
+            loading: false
+        });
+    }
     onLoginSuccess(){
         this.setState({
             email: '',
